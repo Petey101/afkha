@@ -1,5 +1,19 @@
 <main>
 <h2>AFKHA</h2>
-<p>Can you guess when Akha will come back from being AFK?</p>
+<p> <% if current_user %>
+		<%= current_user.name %>
+	<% end %>
+	Can you guess when Akha will come back from being AFK?
+</p>
+	<% if current_user %>
+		<p> Put your guess here </p>
+	<% else %>
+    	<%= form_for(@user) do |f| %>
+      		<%= f.label :name %>
+      		<%= f.text_field :name %>
+
+      		<%= f.submit "Submit" %>
+    	<% end %>
+    <% end %>
 
 </main>
