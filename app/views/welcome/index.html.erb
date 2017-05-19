@@ -1,12 +1,12 @@
 <main>
 <h2>AFKHA</h2>
 <p> <% if current_user %>
-		<%= current_user.name %>
+		<%= @user.name%>,
 	<% end %>
 	Can you guess when Akha will come back from being AFK?
 </p>
 	<% if current_user %>
-		<p> Put your guess here </p>
+		<p> <%= @user.name %> Put your guess here</p>
 	<% else %>
     	<%= form_for(@user) do |f| %>
       		<%= f.label :name %>
