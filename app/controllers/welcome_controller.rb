@@ -4,6 +4,7 @@ class WelcomeController < ApplicationController
 		@users = User.all
 		@games = Game.all
 		@guesses = Guess.all
+		@guess =  Guess.new
 		if current_user 
 			@user = current_user
 		else

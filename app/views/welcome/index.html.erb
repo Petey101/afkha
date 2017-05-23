@@ -7,7 +7,14 @@
 </p>
 	<% if current_user && current_game %>
 		<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
-		<p>How many minutes do you think it will be before she returns?</p>
+		<p>How many minutes do you think it will be before she returns?
+		    <%= form_for(@guess) do |f| %>
+      			<%= f.label :minutes %>
+      			<%= f.number_field :minutes, min: 1  %>
+
+      			<%= f.submit "Submit" %>
+      		<% end %>
+      	</p>
 	<% elsif current_user %>
 	    <p> Is Akha Afk? <%= button_to "SHE'S AFK", { :controller => "games", :action => "create"} %> <p>
 	<% else %>
@@ -24,7 +31,7 @@
 <% end %>
 <h3> All Guesses </h3>
 <% @guesses.each do |x|%>
-	<p> <%= x.user.name %>   <%= x.minutes %> minutes </p> 
+	<p> <%= x.user.name %>  guessed <%= x.minutes %> minutes </p> 
 <% end %>
 <h3> All Games </h3>
 <% @games.each do |x|%>
