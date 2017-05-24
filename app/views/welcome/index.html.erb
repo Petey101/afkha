@@ -1,15 +1,18 @@
 <main>
 <h2>AFKHA</h2>
-<p> <% if current_user %>
+<h3> <% if current_user %>
 		<%= @user.name%>,
 	<% end %>
 	Can you guess when Akha will come back from being AFK?
-</p>
-	<% if current_user && current_game %>
+</h3>
+	<% if current_user && current_game && @guessed %>
+		<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
+		<p> You think Akha will be back in <%= @guessed.minutes %> minutes? Hah, don't hold your breath!</p>
+		<p> Is Akha back? (Please confirm by asking her about naked sushi) <%= button_to "SHE'S BACK", game_path(current_game), method:  :put %> <p>
+	<% elsif current_user && current_game %>
 		<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
 		<p>How many minutes do you think it will be before she returns?
 		    <%= form_for(@guess) do |f| %>
-      			<%= f.label :minutes %>
       			<%= f.number_field :minutes, min: 1  %>
 
       			<%= f.submit "Submit" %>
@@ -24,6 +27,9 @@
 
       		<%= f.submit "Submit" %>
     	<% end %>
+    <% end %>
+    <% if !current_game %>
+    <p> Akha was afk for <%= @last_game_length %> minutes last time </p>
     <% end %>
 <h3> All users </h3>
 <% @users.each do |x|%>

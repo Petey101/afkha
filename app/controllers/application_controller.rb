@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper_method :current_user, :current_game
-	
+	private
 	def current_user
     	return unless session[:user_id]
     	#@current_user ||= User.find(session[:user_id])
@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
     def current_game
     	Game.find_by(end_time: nil)
     end
+
+    
 
   
 end
