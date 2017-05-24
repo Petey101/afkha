@@ -6,3 +6,7 @@ class Guess < ActiveRecord::Base
 	validates :minutes, :numericality => { :greater_than_or_equal_to => 0 }
 
 end
+
+
+
+

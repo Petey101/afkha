@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  get '/users/logout', to: 'users#logout', as: 'logout'
   resources :users, only: [:create]
   resources :guesses , only: [:create]
   resources :games , only: [:create, :update]

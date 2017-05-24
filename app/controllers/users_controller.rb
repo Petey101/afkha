@@ -13,4 +13,14 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def logout
+		if current_user
+			session.clear	
+			redirect_to :back
+		else
+			flash[:notice] = "Stop trying to break my stuff"
+			redirect_to :back
+		end
+	end
+
 end
