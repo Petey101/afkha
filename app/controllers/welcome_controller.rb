@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
 	def index
 		@users = User.all
 		@games = Game.all
-		@guesses = Guess.all
+		@guesses = Game.last.guesses
 		@guess =  Guess.new
 
 		if current_user 

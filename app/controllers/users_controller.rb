@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 			session.clear	
 			redirect_to :back
 		else
-			flash[:notice] = "Stop trying to break my stuff"
+			flash[:notice] = "You are not logged on"
 			redirect_to :back
 		end
 	end

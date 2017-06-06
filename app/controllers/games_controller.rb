@@ -14,6 +14,11 @@ class GamesController < ApplicationController
 	def update
 		if current_game && current_user
 			if current_game.id == params[:id].to_i
+				min_difference = current_game.guesses.map {|s| s[:minutes]}.reduce(0, :+)
+				binding.pry
+				current_game.guesses.each do |x|
+					total_sales = sales.map {|s| s['sale_price']}.reduce(0, :+)
+				end
 				current_game.update(end_time: Time.now)
 				redirect_to :back	
 			else

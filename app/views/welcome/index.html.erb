@@ -5,45 +5,53 @@
 	<% end %>
 	Can you guess when Akha will come back from being AFK?
 </h3>
-	<% if current_user && current_game && @guessed %>
-		<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
-		<%= button_to "Logout", "/users/logout", method: :get %>
-		<p> You think Akha will be back in <%= @guessed.minutes %> minutes? Hah, don't hold your breath!</p>
-		<p> Is Akha back? (Please confirm by asking her about naked sushi) <%= button_to "SHE'S BACK", game_path(current_game), method:  :put %> <p>
-	<% elsif current_user && current_game %>
-		<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
-		<p>How many minutes do you think it will be before she returns?
+
+<% if current_user %>
+	<%= button_to "Logout", "/users/logout", method: :get %>
+	<% if current_game %>
+		<% if @guessed %>
+			<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
+			<p> You think Akha will be back in <%= @guessed.minutes %> minutes? Hah, don't hold your breath!</p>
+			<p> Is Akha back? (Please confirm by asking her about naked sushi) <%= button_to "SHE'S BACK", game_path(current_game), method:  :put %> <p>
+		<% else %> 
+			<h4>Akha has been afk for <%= @elapsed_time %> minutes</h4> 
+			<p>How many minutes do you think it will be before she returns?
 		    <%= form_for(@guess) do |f| %>
       			<%= f.number_field :minutes, min: 1  %>
 
       			<%= f.submit "Submit" %>
       		<% end %>
       	</p>
-	<% elsif current_user %>
-	    <p> Is Akha Afk? <%= button_to "SHE'S AFK", { :controller => "games", :action => "create"} %> <p>
+		<% end %>
 	<% else %>
-    	<%= form_for(@user) do |f| %>
-      		<%= f.label :name %>
-      		<%= f.text_field :name %>
+		<p> Is Akha Afk? <%= button_to "SHE'S AFK", { :controller => "games", :action => "create"} %> <p>
+	<% end %>
+<% else %>
+    <%= form_for(@user) do |f| %>
+  		<%= f.label :name %>
+      	<%= f.text_field :name %>
 
-      		<%= f.submit "Submit" %>
-    	<% end %>
-    <% end %>
+      	<%= f.submit "Submit" %>
+      	<% end %>
+<% end %>
 
 
 
 
-
-
-    <p> Akha was afk for <%= @last_game_length %> minutes last time </p>
+<p> Akha was afk for <%= @last_game_length %> minutes last time </p>
 <h3> All users </h3>
 <% @users.each do |x|%>
 	<p> <%= x.name %> </p> 
 <% end %>
-<h3> All Guesses </h3>
-<% @guesses.each do |x|%>
-	<p> <%= x.user.name %>  guessed <%= x.minutes %> minutes </p> 
+<% if current_game %>
+	<h3> All Guesses for current game</h3>
+<% else %>
+	<h3> All guesses for last game</h3>
 <% end %>
+	<% @guesses.each do |x|%>
+		<p> <%= x.user.name %>  guessed <%= x.minutes %> minutes </p> 
+	<% end %>
+
 <h3> All Games </h3>
 <% @games.each do |x|%>
 	<p> <%= x.created_at %> </p>
