@@ -23,7 +23,8 @@ class GamesController < ApplicationController
 						winner = guess
 					end
 				end
-				(winner.user.points += 1).save
+				winner.user.points += 1
+				winner.user.save
 				current_game.update(end_time: Time.now)
 				redirect_to :back	
 			else
