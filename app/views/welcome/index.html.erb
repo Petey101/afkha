@@ -41,7 +41,7 @@
 <p> Akha was afk for <%= @last_game_length %> minutes last time </p>
 <h3> All users </h3>
 <% @users.each do |x|%>
-	<p> <%= x.name %> </p> 
+	<p> <%= x.name %>  <%=x.points %> Wins</p> 
 <% end %>
 <% if current_game %>
 	<h3> All Guesses for current game</h3>

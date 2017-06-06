@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
 
 	def create    		
-		flash[:notice] = "She AFK now"
+		flash[:notice] = "She's AFK now"
 		if current_game
 			flash[:notice] = "We already know she's AFK"
 			redirect_to :back
@@ -14,11 +14,16 @@ class GamesController < ApplicationController
 	def update
 		if current_game && current_user
 			if current_game.id == params[:id].to_i
-				min_difference = current_game.guesses.map {|s| s[:minutes]}.reduce(0, :+)
-				binding.pry
-				current_game.guesses.each do |x|
-					total_sales = sales.map {|s| s['sale_price']}.reduce(0, :+)
+				min_difference = (Time.now - current_game.created_at) / 60
+				afk_time = (Time.now - current_game.created_at) / 60
+				winner =[]
+				current_game.guesses.each do |guess|
+					if (afk_time - guess.minutes).abs < min_difference
+						min_difference = (afk_time - guess.minutes).abs
+						winner = guess
+					end
 				end
+				(winner.user.points += 1).save
 				current_game.update(end_time: Time.now)
 				redirect_to :back	
 			else
@@ -30,4 +35,3 @@ class GamesController < ApplicationController
 	end
 
 end
- 
